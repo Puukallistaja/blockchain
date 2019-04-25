@@ -1,42 +1,41 @@
-
-const Block = require('./block.js')
+const Block = require("./block.js");
 
 class Blockchain {
   constructor() {
-    this.chain = [new Block({title: 'Let there be Chain', description: 'I am the first of my kind'})]
+    this.chain = [new Block({ data: "I am the first of my kind" })];
   }
 
   getLatestBlock() {
-    return this.chain.slice().pop()
+    return this.chain.slice(-1)[0];
   }
 
   add(data) {
-    const newBlock = new Block(data)
+    const newBlock = new Block(data);
 
-    newBlock.previousHash = this.getLatestBlock().hash
-    newBlock.hash = newBlock.calculateHash()
-    this.chain.push(newBlock)
+    newBlock.previousHash = this.getLatestBlock().hash || '0';
+    newBlock.hash = newBlock.calculateHash();
+
+    this.chain.push(newBlock);
   }
 }
 
-module.exports = Blockchain
-
+module.exports = Blockchain;
 
 //=============================== tests ========================================
-function runTests() {
-  const batCoin = new Blockchain()
-
-  console.log(`${batCoin} named batCoin is ${typeof batCoin}`)
-
-  batCoin.add(new Block({title: 'Abrakadabra', info: 'Magic'}))
-  batCoin.add(new Block({
-    title: 'Transaction',
-    amount: '1',
-    sender: 'Arto',
-    receiver: 'Arto',
-    description: 'Arto built a blockchain'
-  }))
-
-  console.log(batCoin.add(new Block('Testing')))
+if (process.env.DEBUG) {
+  runTests();
 }
-// runTests()
+
+function runTests() {
+  const batCoin = new Blockchain();
+
+  batCoin.add(new Block({ data: "Abrakadabra" }));
+  batCoin.add(new Block({ data: "To the Catmobile!" }));
+
+  console.log(batCoin.chain);
+  console.log(`========== Chain =============
+    Expected batCoin height 3 - Received: ${
+      batCoin.chain.length === 3 ? true : batCoin.chain.length
+    }
+  `);
+}

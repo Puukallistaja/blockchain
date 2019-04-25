@@ -2,11 +2,8 @@
 const SHA256 = require('crypto-js/sha256')
 
 class Block {
-  constructor(data, previousHash = '0') {
-    this.previousHash = previousHash
-    this.time = new Date().getTime().toString()
-    this.data = JSON.stringify(data)
-    this.hash = this.calculateHash()
+  constructor({ data }) {
+    this.data = data
   }
 
   calculateHash() {
@@ -22,6 +19,16 @@ class Block {
 module.exports = Block
 
 //=============================== tests ========================================
+if (process.env.DEBUG) {
+  runTests();
+}
+
 function runTests() {
-  console.log(new Block())
+  let block = new Block({ data: 'Some string' })
+  console.log(block)
+  console.log(`========== Block =============
+    Expected block data to be 'Some string' - Received: ${
+      block.data === 'Some string' ? true : block.data
+    }
+  `);
 }

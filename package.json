@@ -1,0 +1,27 @@
+{
+  "name": "blockchain",
+  "version": "1.0.0",
+  "description": "chain with blocks",
+  "main": "chain.js",
+  "scripts": {
+    "test": "DEBUG=true node chain.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Puukallistaja/blockchain.git"
+  },
+  "keywords": [
+    "block",
+    "chain",
+    "crypto"
+  ],
+  "author": "Arto Haponen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Puukallistaja/blockchain/issues"
+  },
+  "homepage": "https://github.com/Puukallistaja/blockchain#readme",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1"
+  }
+}
